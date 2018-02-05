@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf8">
+	<title>チョコネミミッミ</title>
+	<style type="text/css">
+		#gamewindow{
+			border: 1px solid gray;
+			width: 720px;
+			height: 540px;
+
+			text-align: center;
+			background-image: url(resource/img/sweet/sweet_1.png);
+			background-size: 720px 540px;
+		}
+		
+		#buttonwindow{
+		}
+		#buttonwindow > form > button{
+			width: 200px;
+			height: 100px;
+			margin-bottom: 15px;
+			font-size: 10px;
+		}
+		#buttonwindow > form > button > #buttonimage{
+			position: relative;
+			width: 100px;
+			height: 75px;
+			top: 5px;
+			right: 10px;
+		}	
+	</style>
+</head>
+<body>
+
+<!-- 通信結果をここに表示 -->
+<div id="gamewindow">
+	<div id="buttonwindow">
+		<form action="test.php" method="POST">
+			<button id="data1" name="dataID" value="1"><img id="buttonimage" src="resource/img/sweet/sweet_1.png">キュベルトン</button>
+		</form>
+		<form action="test.php" method="POST">
+			<button id="data2" name="dataID" value="2"><img id="buttonimage" src="resource/img/sweet/sweet_2.png">ジャヴァネ</button>
+		</form>
+		<form action="test.php" method="POST">
+			<button id="data3" name="dataID" value="3"><img id="buttonimage" src="resource/img/sweet/sweet_3.png">スペキュロス</button>
+		</form>
+		<form action="test.php" method="POST">
+			<button id="data4" name="dataID" value="4"><img id="buttonimage" src="resource/img/sweet/sweet_4.png">チョコレート</button>
+		</form>
+		<form action="test.php" method="POST">
+			<button id="data1" name="dataID" value="5"><img id="buttonimage" src="resource/img/sweet/sweet_5.png">マジパン</button>
+		</form>
+		
+		<form action="test.php" method="POST">
+			<button id="data2" name="dataID" value="6"><img id="buttonimage" src="resource/img/sweet/sweet_6.png">ミゼラブル</button>
+		</form>
+		<form action="test.php" method="POST">
+			<button id="data3" name="dataID" value="7"><img id="buttonimage" src="resource/img/sweet/sweet_7.png">メルヴェイユ</button>
+		</form>
+		<form action="test.php" method="POST">
+			<button id="data4" name="dataID" value="8"><img id="buttonimage" src="resource/img/sweet/sweet_8.png">ワッフル</button>
+		</form>
+		<form action="test.php" method="POST">
+			<button id="data3" name="dataID" value="9"><img id="buttonimage" src="resource/img/nosweet/sweet_9.png">カルボナード</button>
+		</form>
+		<form action="test.php" method="POST">
+			<button id="data4" name="dataID" value="10"><img id="buttonimage" src="resource/img/nosweet/sweet_10.png">クロケット</button>
+		</form>
+	</div>
+
+	<input type="text" id="count">
+	<button type="button" id="sendbutton">送信する</button>
+</div>
+
+<script>
+	var canvas = document.querySelector("#canvas");
+	var hello  = document.querySelector("#sendbutton");
+	
+	// 送信ボタンを押したとき
+	hello.addEventListener("click", function(){
+	// ガチャ回数 属性の取得
+	var count = document.querySelector("#count").value;
+	// XMLHttpRequest(); サーバとクライアントとの通信をするために必要なもの
+	// 設定をして送信する形にする
+	var request = new XMLHttpRequest();
+	// open(メソッドの指定, URLの指定, 同期通信をするか)
+	
+	// 画像の差し替え
+	
+	request.open('GET', 'http://localhost/tanpopo_team/Yajima/php/question.php', false);
+	//request.open('GET', 'http://localhost/tanpopo_team/OnlineGame/php/question.php', false);
+	// 貰った内容に対してどのような処理を行うか クロージャーを渡して書く
+	request.onload = function() {
+		// request.status === 200 今回の処理が成功しているか
+		// 200が帰って来た場合は、正常にデータが送られている
+		if (request.status === 200) {
+			// データの取り出し
+			// request.responseText サーバから貰った内容が取り出せる
+			// まだこの段階のJSONは文字列になっているー＞うまく扱えない
+			var response = request.responseText;
+			// 文字列をJSで使えるように変換
+			var json = JSON.parse(response);
+			
+			var str = "";
+			for(var i = 0; i < json.length; i++){
+				// 処理の実行
+				// json[i]["img"]
+				//str += '<img src="resource/img/sweet/' + json[i]["img"] +'.png" width="100">';
+				str += '<img src="' + json[i]["img"] +'" width="100">';
+			}
+			
+			// 押したデータの情報を保存
+			
+			//str = json;
+			canvas.innerHTML = str;
+		}
+	};
+	request.onerror = function() {
+		//エラー時の処理
+		canvas.innerHTML = "Error!";
+	};
+	//送信
+	// ここでサーバとの通信を行っている
+	request.send();		//POSTの場合は引数に文字列を渡す
+});
+</script>
+
+</body>
+</html>
