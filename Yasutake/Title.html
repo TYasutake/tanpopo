@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utl8">
-	<title>すいぱらいこー</title>
+	<title>ワッフルたのしみー</title>
 	<link rel="stylesheet" href="../style.css">
 	<style>
 		#gamewindow{
@@ -16,21 +16,25 @@
 			font-size: 50px;
 		}
 		#gamewindow > form > button{
-			margin-top:150px;
+			margin-top:400px;
 			width: 200px;
 			height: 50px;
 			font-size: 32px;
-			margin-right: 400px;
+			
 		}
 	</style>
 </head>
 <body>
 	<section id="gamewindow">
-		<form action="../php/Solver.php" method="GET">
-			<button>新コーナー</button>
-		</form>
-		<h1>チョコネミミッミ</h1>
+		
 	
 	<section>
+	<script>
+		var susumu  = document.querySelector("#gamewindow");
+		
+		susumu.addEventListener("click", function(){
+			window.location.href = '../php/Solver.php';
+		});
+	</script>
 </body>
 </html>

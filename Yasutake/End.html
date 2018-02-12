@@ -10,27 +10,26 @@
 			width: 720px;
 			height: 540px;
 			text-align: center;
-			background-image: url(../resource/img/bg/title.png);
+			background-image: url(../resource/img/bg/end.png);
 		}
 		#gamewindow > h1{
+			line-height: 500px;
 			font-size: 50px;
 		}
-		#gamewindow > form > button{
-			margin-top:150px;
-			width: 200px;
-			height: 50px;
-			font-size: 32px;
-			margin-right: 400px;
-		}
+		
 	</style>
 </head>
 <body>
 	<section id="gamewindow">
-		<form action="Title.html" method="POST">
-			<button>すいぱらいこー</button>
-		</form>
-		<h1>BELGIUM</h1>
+		<h1>また来てね</h1>
 	
 	<section>
+	<script>
+		var susumu  = document.querySelector("#gamewindow");
+		
+		susumu.addEventListener("click", function(){
+			window.location.href = 'Title.html';
+		});
+	</script>
 </body>
 </html>
