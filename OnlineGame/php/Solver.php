@@ -15,7 +15,7 @@
 			width: 720px;
 			height: 540px;
 			text-align: center;
-			background-image: url(../resource/img/bg/sweet_1.png);
+			background-image: url(../resource/img/bg/sweet_2.png);
 		}
 		#mimimi{
 			height: 425px;
@@ -56,6 +56,8 @@
 			font-size: 30px;
 		}
 	</style>
+	<script>
+	</script>
 </head>
 <body>
 	<audio id="done" src="../resource/sound/se/cannon2.wav"></audio>
@@ -83,12 +85,11 @@
 	var iranai  = document.querySelector("#iranai");
 	var bobuko = document.querySelector("#bobuko");
 	var judge = document.querySelector("#judge");
-	var count = 0;
+	var count = -1; //初めに最初の画像貰うように-1
 	var win = true;
 	var end = false;
 	
 	var array = ['1','1','1','1','1','1','1','1','3','3']
-	var imgnum = 0;
 	
 	modoru.style.visibility = "hidden";
 	judge.style.visibility = "hidden";
@@ -101,20 +102,21 @@
 			tabeta.style.visibility = "hidden";
 			iranai.style.visibility = "hidden";
 			var request = new XMLHttpRequest();
-			request.open('GET', 'http://localhost/2018gacha.php?kaisuu='+number, false);
+			//var snum = count / 2;  カウントくんの半分の数字（何回目か ー1）
+			//↓ここわかんにゃい
+			request.open('GET', 'http://localhost/OnlineGame/php/question.php?count='+0, false);
 			request.onload = function() {
 				//正常にデータを受け取ったら
 				if (request.status === 200) {
 					var response = request.responseText; //jsonの文字を
 					var json     = JSON.parse(response); //javascriptで使えるように変換
 					
-					imgnum = 3;
-				
-					//        ↓もらったIDに変更
-					if(array[9] == number){
-						if(number == 1){
-						//        ↓もらったIDに変更
-							array[9] = 2;
+					console.log(json["number"]);
+					
+					if(array[json["number"]] == number){ //正解
+						if(number == 1){//まだ食べてないものを
+						
+							array[json["number"]] = 2; //食べたことに
 						}
 					}
 					else{
@@ -128,15 +130,37 @@
 			};
 			//サーバーとつながらなかったら
 			request.onerror = function() {
-				//エラー時の処理
-				if(number === 1)bobuko.setAttribute("src","../resource/img/character/Bobko2.png");
-					if(number === 2 || number === 3)bobuko.setAttribute("src","../resource/img/character/Bobko3.png");
+				
+					
+					console.log("ちがうだろ");
 			};
 			//送信
 			request.send();		//POSTの場合は引数に文字列を渡す
 		}
 		else {
 				count++;
+				
+				var request = new XMLHttpRequest();
+				//var snum = count / 2;  カウントくんの半分の数字（何回目か ー1）
+				//↓ここわかんにゃい
+				request.open('GET', 'http://localhost/OnlineGame/php/question.php?count='+0, false);
+				request.onload = function() {
+					//正常にデータを受け取ったら
+					if (request.status === 200) {
+						var response = request.responseText; //jsonの文字を
+						var json     = JSON.parse(response); //javascriptで使えるように変換
+						//                                                                              ↓画像の番号
+						susumu.style.backgroundImage = 'url(../resource/img/bg/sweet_'+json["sweetID"]+'.png)';
+				
+					}
+				};
+				//サーバーとつながらなかったら
+				request.onerror = function() {
+						console.log("ちがうだろ");
+				};
+				//送信
+				request.send();		//POSTの場合は引数に文字列を渡す
+				
 				susumu.style.backgroundImage = 'url(../resource/img/bg/sweet_'+imgnum+'.png)';
 				modoru.style.visibility = "hidden";
 				oishi.style.visibility = "visible";
@@ -146,6 +170,7 @@
 			}
 	}
 	
+	choice(1);//最初の画像更新
 	
 	oishi.addEventListener("click", function(){
 		se.currentTime = 0;
