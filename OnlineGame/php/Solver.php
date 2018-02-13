@@ -44,10 +44,16 @@
 			position: absolute;
 			z-index: 40;
 		}
+
 		#judge{
 			left: 0px;
 			position: absolute;
 			z-index: 70;
+		}
+		button{
+			height: 60px;
+			width: 180px;
+			font-size: 30px;
 		}
 	</style>
 </head>
@@ -81,6 +87,9 @@
 	var win = true;
 	var end = false;
 	
+	var array = ['1','1','1','1','1','1','1','1','3','3']
+	var imgnum = 0;
+	
 	modoru.style.visibility = "hidden";
 	judge.style.visibility = "hidden";
 	
@@ -98,8 +107,20 @@
 				if (request.status === 200) {
 					var response = request.responseText; //jsonの文字を
 					var json     = JSON.parse(response); //javascriptで使えるように変換
-				
 					
+					imgnum = 3;
+				
+					//        ↓もらったIDに変更
+					if(array[9] == number){
+						if(number == 1){
+						//        ↓もらったIDに変更
+							array[9] = 2;
+						}
+					}
+					else{
+						win = false;
+						modoru.style.visibility = "hidden";
+					}
 					
 					if(number === 1)bobuko.setAttribute("src","../resource/img/character/Bobko2.png");
 					if(number === 2 || number === 3)bobuko.setAttribute("src","../resource/img/character/Bobko3.png");
@@ -116,7 +137,7 @@
 		}
 		else {
 				count++;
-				//se.pause();
+				susumu.style.backgroundImage = 'url(../resource/img/bg/sweet_'+imgnum+'.png)';
 				modoru.style.visibility = "hidden";
 				oishi.style.visibility = "visible";
 				tabeta.style.visibility = "visible";
