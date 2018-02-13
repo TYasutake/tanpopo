@@ -3,127 +3,240 @@
 <head>
 	<meta charset="utf8">
 	<title>チョコネミミッミ</title>
+	<link rel="stylesheet" href="../style.css">
 	<style type="text/css">
 		#gamewindow{
-			border: 1px solid gray;
-			width: 720px;
-			height: 540px;
-
-			text-align: center;
-			background-image: url(resource/img/sweet/sweet_1.png);
+			background-image: url(../resource/img/bg/入店.png);
 			background-size: 720px 540px;
 		}
 		
-		#buttonwindow{
-		}
-		#buttonwindow > form > button{
-			width: 200px;
+		#pagetopwindow{
+			margin-top: 25px;
+			margin-bottom: 50px;
+			font-size: 30pt;
 			height: 100px;
-			margin-bottom: 15px;
-			font-size: 10px;
+	
+			border: 1px solid blue;
+			background-color: rgba(230, 230, 230, 0.7);
 		}
-		#buttonwindow > form > button > #buttonimage{
+		
+		#pagetopwindow > h1{
 			position: relative;
-			width: 100px;
+			top: -55px;
+		}
+		
+		#buttonwindow{
+			position: absolute;
+			z-index: 10;
+			top: 150px;
+			left: 35px;
+			
+			border: 5px solid rgb(255, 200, 0);
+			width: 650px;
+			height: 275px;
+			
+			padding: 5px;
+			text-align: left;
+			
+			background-color: rgb(230, 255, 0);
+		}
+		
+		#sendwindow{
+			position: absolute;
+			z-index: 10;
+			top: 450px;
+			left: 40px;
+			width: 645px;
+			height: 275px;
+			padding: 5px;
+		}
+		
+		#sendwindow > form > button{
+			width: 200px;
+			height: 50px;
+			margin-bottom: 15px;
+			font-size: 20px;
+		}
+		
+		table.buttontables tr td > button{
+			width: 125px;
+			height: 125px;
+			margin-bottom: 15px;
+			font-size: 17px;
+			font-weight: bold;
+			
+			border-radius: 10px;
+			-moz-border-radius:
+		}
+		table.buttontables tr td > button:hover{
+			opacity: 0.8;
+		}
+		table.buttontables tr td > #sweet{
+			background: -moz-linear-gradient(top, rgb(255, 255, 255), rgb(250, 5, 90) 50%, rgb(250, 100, 100));
+		}
+		table.buttontables tr td > #nosweet{
+			background: -moz-linear-gradient(top, rgb(255, 255, 255), rgb(0, 255, 255) 50%, rgb(0, 150, 255));
+		}
+		
+		table.buttontables tr td > button > #buttonimage{
+			position: relative;
+			width: 125px;
 			height: 75px;
-			top: 5px;
+			top: 0px;
 			right: 10px;
-		}	
+		}
 	</style>
 </head>
 <body>
 
 <!-- 通信結果をここに表示 -->
-<div id="gamewindow">
-	<div id="buttonwindow">
-		<form action="test.php" method="POST">
-			<button id="data1" name="dataID" value="1"><img id="buttonimage" src="resource/img/sweet/sweet_1.png">キュベルトン</button>
-		</form>
-		<form action="test.php" method="POST">
-			<button id="data2" name="dataID" value="2"><img id="buttonimage" src="resource/img/sweet/sweet_2.png">ジャヴァネ</button>
-		</form>
-		<form action="test.php" method="POST">
-			<button id="data3" name="dataID" value="3"><img id="buttonimage" src="resource/img/sweet/sweet_3.png">スペキュロス</button>
-		</form>
-		<form action="test.php" method="POST">
-			<button id="data4" name="dataID" value="4"><img id="buttonimage" src="resource/img/sweet/sweet_4.png">チョコレート</button>
-		</form>
-		<form action="test.php" method="POST">
-			<button id="data1" name="dataID" value="5"><img id="buttonimage" src="resource/img/sweet/sweet_5.png">マジパン</button>
-		</form>
-		
-		<form action="test.php" method="POST">
-			<button id="data2" name="dataID" value="6"><img id="buttonimage" src="resource/img/sweet/sweet_6.png">ミゼラブル</button>
-		</form>
-		<form action="test.php" method="POST">
-			<button id="data3" name="dataID" value="7"><img id="buttonimage" src="resource/img/sweet/sweet_7.png">メルヴェイユ</button>
-		</form>
-		<form action="test.php" method="POST">
-			<button id="data4" name="dataID" value="8"><img id="buttonimage" src="resource/img/sweet/sweet_8.png">ワッフル</button>
-		</form>
-		<form action="test.php" method="POST">
-			<button id="data3" name="dataID" value="9"><img id="buttonimage" src="resource/img/nosweet/sweet_9.png">カルボナード</button>
-		</form>
-		<form action="test.php" method="POST">
-			<button id="data4" name="dataID" value="10"><img id="buttonimage" src="resource/img/nosweet/sweet_10.png">クロケット</button>
-		</form>
+<div id="gamewindow">	
+	<div id="pagetopwindow">
+		<h1>すいーつをえらぶ</h1>
 	</div>
+		
+	<div id="buttonwindow">
+		<table class="buttontables">
+			<tr>
+				<td>
+					<button id="sweet" name="dataID" value="0">
+					<img id="buttonimage" src="../resource/img/sweet/sweet_1.png">キュベルトン</button>
+				</td>
+				<td>
+					<button id="sweet" name="dataID" value="1">
+					<img id="buttonimage" src="../resource/img/sweet/sweet_2.png">ジャヴァネ</button>
+				</td>
+				<td>
+					<button id="sweet" name="dataID" value="2">
+					<img id="buttonimage" src="../resource/img/sweet/sweet_3.png">スペキュロス</button>
+				</td>
+				<td>
+					<button id="sweet" name="dataID" value="3">
+					<img id="buttonimage" src="../resource/img/sweet/sweet_4.png">チョコレート</button>
+				</td>
+				<td>
+					<button id="sweet" name="dataID" value="4">
+					<img id="buttonimage" src="../resource/img/sweet/sweet_5.png">マジパン</button>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button id="sweet" name="dataID" value="5">
+					<img id="buttonimage" src="../resource/img/sweet/sweet_6.png">ミゼラブル</button>
+				</td>
+				<td>
+					<button id="sweet" name="dataID" value="6">
+					<img id="buttonimage" src="../resource/img/sweet/sweet_7.png">メルヴェイユ</button>
+				</td>
+				<td>
+					<button id="sweet" name="dataID" value="7">
+					<img id="buttonimage" src="../resource/img/sweet/sweet_8.png">ワッフル</button>
+				</td>
+				<td>
+					<button id="nosweet" name="dataID" value="8">
+					<img id="buttonimage" src="../resource/img/nosweet/sweet_9.png">カルボナード</button>
+				</td>
+				<td>
+					<button id="nosweet" name="dataID" value="9">
+					<img id="buttonimage" src="../resource/img/nosweet/sweet_10.png">クロケット</button>
+				</td>
+			</tr>
+		</table>
 
-	<input type="text" id="count">
-	<button type="button" id="sendbutton">送信する</button>
+		
+	</div>
+	
+	<div id="sendwindow">
+		<form action="SendOK.html" method="POST">
+			<button id="send_a" name="dataID" value="OK">いこっか</button>
+		</form>
+		<button id="send" name="dataID" value="OK">これでいいや</button>
+	</div>
 </div>
 
-<script>
-	var canvas = document.querySelector("#canvas");
-	var hello  = document.querySelector("#sendbutton");
-	
+<script>	
 	// 送信ボタンを押したとき
-	hello.addEventListener("click", function(){
 	// ガチャ回数 属性の取得
-	var count = document.querySelector("#count").value;
+	//var count = document.querySelector("#count").value;
 	// XMLHttpRequest(); サーバとクライアントとの通信をするために必要なもの
-	// 設定をして送信する形にする
-	var request = new XMLHttpRequest();
-	// open(メソッドの指定, URLの指定, 同期通信をするか)
+	var foods = [];
+	
+	// スイーツボタン配列
+	var btnSweets = document.querySelectorAll("#sweet");
+	for(var i = 0; i < btnSweets.length; i++){
+		btnSweets[i].addEventListener("click", function(){
+			addFood(this.value);
+		});
+	}
+	// ノースイーツボタン配列
+	var btnNotSweets = document.querySelectorAll("#nosweet");
+	for(var i = 0; i < btnNotSweets.length; i++){
+		btnNotSweets[i].addEventListener("click", function(){
+			addFood(this.value);
+		});
+	}
+	
+	
+	// 送信ボタンの処理
+	var btnSend = document.querySelector("#send");
+	// スイーツデータを入れる
+	btnSend.addEventListener("click", function(){
+		sendSweet();
+	});
+	
+	// スイーツの追加
+	function addFood(value){
+		// 設定をして送信する形にする
+		var request = new XMLHttpRequest();
+		// open(メソッドの指定, URLの指定, 同期通信をするか)
+		// 送信先の指定
+		request.open('POST', 'http://localhost/OnlineGame/php/food.php', false);
+		// 貰った内容に対してどのような処理を行うか クロージャーを渡して書く
+		request.onload = function() {
+			if (request.status === 200) {
+				// データの取り出し
+				var response = request.responseText;
+				// 文字列をJSで使えるように変換
+				var json = JSON.parse(response);
+				//console.log(json[value]);
+				foods.push(json[value]);
+			}
+		};
+	
+		request.onerror = function() {
+			//エラー時の処理
+		};
+		//送信
+		request.send();		//POSTの場合は引数に文字列を渡す	
+	}
+	
+	function sendSweet(){
+		// 設定をして送信する形にする
+		var request = new XMLHttpRequest();
+		// open(メソッドの指定, URLの指定, 同期通信をするか)
+		// 送信先の指定
+		// 
+		var foods_json = JSON.stringify(foods);
+		//request.open('POST', 'http://localhost/OnlineGame/php/question.php', false);
+		request.open('GET', 'http://localhost/OnlineGame/php/question.php?foods[]=' + foods_json, false);
+		// 貰った内容に対してどのような処理を行うか クロージャーを渡して書く
+		request.onload = function() {
+			if (request.status === 200) {
+				// データを入れる
+			}
+		};
+	
+		request.onerror = function() {
+			//エラー時の処理
+		};
+		//送信
+		//request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		// ここでサーバとの通信を行っている
+		request.send();		//POSTの場合は引数に文字列を渡す	
+	}
 	
 	// 画像の差し替え
 	
-	request.open('GET', 'http://localhost/tanpopo_team/Yajima/php/question.php', false);
-	//request.open('GET', 'http://localhost/tanpopo_team/OnlineGame/php/question.php', false);
-	// 貰った内容に対してどのような処理を行うか クロージャーを渡して書く
-	request.onload = function() {
-		// request.status === 200 今回の処理が成功しているか
-		// 200が帰って来た場合は、正常にデータが送られている
-		if (request.status === 200) {
-			// データの取り出し
-			// request.responseText サーバから貰った内容が取り出せる
-			// まだこの段階のJSONは文字列になっているー＞うまく扱えない
-			var response = request.responseText;
-			// 文字列をJSで使えるように変換
-			var json = JSON.parse(response);
-			
-			var str = "";
-			for(var i = 0; i < json.length; i++){
-				// 処理の実行
-				// json[i]["img"]
-				//str += '<img src="resource/img/sweet/' + json[i]["img"] +'.png" width="100">';
-				str += '<img src="' + json[i]["img"] +'" width="100">';
-			}
-			
-			// 押したデータの情報を保存
-			
-			//str = json;
-			canvas.innerHTML = str;
-		}
-	};
-	request.onerror = function() {
-		//エラー時の処理
-		canvas.innerHTML = "Error!";
-	};
-	//送信
-	// ここでサーバとの通信を行っている
-	request.send();		//POSTの場合は引数に文字列を渡す
-});
 </script>
 
 </body>
