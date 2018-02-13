@@ -1,5 +1,5 @@
 <?php
-
+	//使わなかったphp 悲しみ
 ?>
 
 <!DOCTYPE html>
@@ -73,9 +73,6 @@
 			<button id="iranai">いらなーい</button>
 			<button id="modoru">探す</button>
 	</div>
-	<form action="../html/End.html" method="POST">
-			<button>帰宅</button>
-	</form>
 	<script>
 	var susumu  = document.querySelector("#gamewindow");
 	var se = document.querySelector("#done");
@@ -86,88 +83,93 @@
 	var bobuko = document.querySelector("#bobuko");
 	var judge = document.querySelector("#judge");
 	var count = -1; //初めに最初の画像貰うように-1
+	var sweetNumber = 0;
 	var win = true;
 	var end = false;
 	
-	var array = ['1','1','1','1','1','1','1','1','3','3']
+	var array = [1,1,1,1,1,1,1,1,3,3];
 	
 	modoru.style.visibility = "hidden";
 	judge.style.visibility = "hidden";
 	
 	function choice(number){
 		if(count%2 == 0){
+			// 判断結果表示の場合
 			count++;
+			// カウントが 39でなければ、探すボタンの表示
 			if(count != 39)modoru.style.visibility = "visible";
+			// 判断用ボタンの非表示
 			oishi.style.visibility = "hidden";
 			tabeta.style.visibility = "hidden";
 			iranai.style.visibility = "hidden";
+			// PHP
 			var request = new XMLHttpRequest();
-			//var snum = count / 2;  カウントくんの半分の数字（何回目か ー1）
-			//↓ここわかんにゃい
-			request.open('GET', 'http://localhost/OnlineGame/php/question.php?count='+0, false);
+			request.open('GET', 'http://localhost/OnlineGame/php/question.php?number='+sweetNumber, false);
 			request.onload = function() {
 				//正常にデータを受け取ったら
 				if (request.status === 200) {
 					var response = request.responseText; //jsonの文字を
 					var json     = JSON.parse(response); //javascriptで使えるように変換
 					
-					console.log(json["number"]);
-					
-					if(array[json["number"]] == number){ //正解
+					//console.log(json["number"]);
+					console.log(json['sweetID']);
+					// 数値が一致していた場合
+					if(array[json['sweetID'] - 1] == number){ //正解
 						if(number == 1){//まだ食べてないものを
-						
-							array[json["number"]] = 2; //食べたことに
+							array[json['sweetID'] - 1] = 2; //食べたことに
 						}
 					}
 					else{
+						// クライアントの敗北
 						win = false;
 						modoru.style.visibility = "hidden";
 					}
-					
+					// すいーつかどうかでボブ子の画像を変える
 					if(number === 1)bobuko.setAttribute("src","../resource/img/character/Bobko2.png");
 					if(number === 2 || number === 3)bobuko.setAttribute("src","../resource/img/character/Bobko3.png");
 				}
 			};
 			//サーバーとつながらなかったら
 			request.onerror = function() {
-				
-					
+					// 足りないから追加
+					console.log("このハゲー！");
 					console.log("ちがうだろ");
 			};
 			//送信
 			request.send();		//POSTの場合は引数に文字列を渡す
+			console.log(array);
 		}
 		else {
-				count++;
-				
-				var request = new XMLHttpRequest();
-				//var snum = count / 2;  カウントくんの半分の数字（何回目か ー1）
-				//↓ここわかんにゃい
-				request.open('GET', 'http://localhost/OnlineGame/php/question.php?count='+0, false);
-				request.onload = function() {
-					//正常にデータを受け取ったら
-					if (request.status === 200) {
-						var response = request.responseText; //jsonの文字を
-						var json     = JSON.parse(response); //javascriptで使えるように変換
-						//                                                                              ↓画像の番号
-						susumu.style.backgroundImage = 'url(../resource/img/bg/sweet_'+json["sweetID"]+'.png)';
-				
-					}
-				};
-				//サーバーとつながらなかったら
-				request.onerror = function() {
-						console.log("ちがうだろ");
-				};
-				//送信
-				request.send();		//POSTの場合は引数に文字列を渡す
-				
-				susumu.style.backgroundImage = 'url(../resource/img/bg/sweet_'+imgnum+'.png)';
-				modoru.style.visibility = "hidden";
-				oishi.style.visibility = "visible";
-				tabeta.style.visibility = "visible";
-				iranai.style.visibility = "visible";
-				bobuko.setAttribute("src","../resource/img/character/Bobko.png");
-			}
+			// すいーつ判断の場合
+			count++;
+			
+			var request = new XMLHttpRequest();
+			request.open('GET', 'http://localhost/OnlineGame/php/question.php?number='+sweetNumber, false);
+			request.onload = function() {
+				//正常にデータを受け取ったら
+				if (request.status === 200) {
+					var response = request.responseText; //jsonの文字を
+					var json     = JSON.parse(response); //javascriptで使えるように変換
+					//                                                                              ↓画像の番号
+					susumu.style.backgroundImage = 'url(../resource/img/bg/sweet_'+json["sweetID"]+'.png)';
+				}
+			};
+			//サーバーとつながらなかったら
+			request.onerror = function() {
+				// 足りないから追加
+				console.log("このハゲー！");
+				console.log("ちがうだろ");
+			};
+			//送信
+			request.send();		//POSTの場合は引数に文字列を渡す
+			// ボタンの表示切り替え
+			modoru.style.visibility = "hidden";
+			oishi.style.visibility = "visible";
+			tabeta.style.visibility = "visible";
+			iranai.style.visibility = "visible";
+			// ボブ子の画像を戻す
+			bobuko.setAttribute("src","../resource/img/character/Bobko.png");
+		}
 	}
 	
 	choice(1);//最初の画像更新
@@ -175,26 +177,20 @@
 	oishi.addEventListener("click", function(){
 		se.currentTime = 0;
 		se.play();
-		//se.seekable.start(0);
 		choice(1);
-		//console.log('countの出力 : %d', count);
-		//bobuko.setAttribute("src","../resource/img/character/Bobko.png");
 	});
 
 	tabeta.addEventListener("click", function(){
 		choice(2);
-		//bobuko.setAttribute("src","../resource/img/character/Bobko2.png");
 	});
 
 	iranai.addEventListener("click", function(){
 		choice(3);
-		//bobuko.setAttribute("src","../resource/img/character/Bobko3.png");
 	});
 	
 	modoru.addEventListener("click", function(){
+		sweetNumber++;
 		choice(1);
-		//console.log('countの出力 : %d', count);
-		//bobuko.setAttribute("src","../resource/img/character/Bobko.png");
 	});
 	
 	function next(){
@@ -211,9 +207,8 @@
 	}
 	
 	susumu.addEventListener("click", function(){
-			next();
-	});
-		
+		next();
+	});	
 	
 	</script>
 </body>

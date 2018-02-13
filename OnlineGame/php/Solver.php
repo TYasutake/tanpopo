@@ -1,5 +1,5 @@
 <?php
-
+	//使わなかったphp 悲しみ
 ?>
 
 <!DOCTYPE html>
@@ -73,9 +73,6 @@
 			<button id="iranai">いらなーい</button>
 			<button id="modoru">探す</button>
 	</div>
-	<form action="../html/End.html" method="POST">
-			<button>帰宅</button>
-	</form>
 	<script>
 	var susumu  = document.querySelector("#gamewindow");
 	var se = document.querySelector("#done");
@@ -107,10 +104,6 @@
 			iranai.style.visibility = "hidden";
 			// PHP
 			var request = new XMLHttpRequest();
-			//var snum = count / 2;  カウントくんの半分の数字（何回目か ー1）
-			//↓ここわかんにゃい
-			//request.open('GET', 'http://localhost/OnlineGame/php/question.php?count='+0, false);
-			// number を count にカエルだけやで
 			request.open('GET', 'http://localhost/OnlineGame/php/question.php?number='+sweetNumber, false);
 			request.onload = function() {
 				//正常にデータを受け取ったら
@@ -121,11 +114,8 @@
 					//console.log(json["number"]);
 					console.log(json['sweetID']);
 					// 数値が一致していた場合
-					// わかりづらいテーブルで申し訳ない
-					// if(array[json["number"]] == number){ //正解
 					if(array[json['sweetID'] - 1] == number){ //正解
 						if(number == 1){//まだ食べてないものを
-							//array[json["number"]] = 2; //食べたことに
 							array[json['sweetID'] - 1] = 2; //食べたことに
 						}
 					}
@@ -154,10 +144,6 @@
 			count++;
 			
 			var request = new XMLHttpRequest();
-			//var snum = count / 2;  カウントくんの半分の数字（何回目か ー1）
-			//↓ここわかんにゃい
-			//request.open('GET', 'http://localhost/OnlineGame/php/question.php?count='+count, false);
-			// number を count にカエルだけやで
 			request.open('GET', 'http://localhost/OnlineGame/php/question.php?number='+sweetNumber, false);
 			request.onload = function() {
 				//正常にデータを受け取ったら
@@ -191,28 +177,20 @@
 	oishi.addEventListener("click", function(){
 		se.currentTime = 0;
 		se.play();
-		//se.seekable.start(0);
 		choice(1);
-		//console.log('countの出力 : %d', count);
-		//bobuko.setAttribute("src","../resource/img/character/Bobko.png");
 	});
 
 	tabeta.addEventListener("click", function(){
 		choice(2);
-		//bobuko.setAttribute("src","../resource/img/character/Bobko2.png");
 	});
 
 	iranai.addEventListener("click", function(){
 		choice(3);
-		//bobuko.setAttribute("src","../resource/img/character/Bobko3.png");
 	});
 	
 	modoru.addEventListener("click", function(){
 		sweetNumber++;
-		//console.log(sweetNumber);
 		choice(1);
-		//console.log('countの出力 : %d', count);
-		//bobuko.setAttribute("src","../resource/img/character/Bobko.png");
 	});
 	
 	function next(){
