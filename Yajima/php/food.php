@@ -10,21 +10,7 @@ $pw   = 'H@chiouji1';   //MySQLのパスワード
 // 変数
 $sweetList = [];
 
-//LoadData($dsn, $user, $pw);
-
-$sql = 'select * from Sweet';
-		
-$dbh = new PDO($dsn, $user, $pw);   //接続
-$sth = $dbh->prepare($sql);         //SQL準備
-$sth->execute();                    //実行
-	
-while(true){
-	// 1行のみを取得している
-	$buff = $sth->fetch(PDO::FETCH_ASSOC);
-	if ($buff === false) break;
-	// データを入れる
-	array_push($sweetList, $buff);
-}
+LoadData($dsn, $user, $pw);
 
 header('Access-Control-Allow-Origin: *');
 

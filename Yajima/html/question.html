@@ -6,56 +6,18 @@
 	<link rel="stylesheet" href="../style.css">
 	<style type="text/css">
 		#gamewindow{
-			background-image: url(../resource/img/bg/入店.png);
+			background-image: url(../resource/img/bg/retitle.png);
 			background-size: 720px 540px;
 		}
 		
-		#pagetopwindow{
-			margin-top: 25px;
-			margin-bottom: 50px;
-			font-size: 30pt;
-			height: 100px;
-	
-			border: 1px solid blue;
-			background-color: rgba(230, 230, 230, 0.7);
-		}
-		
-		#pagetopwindow > h1{
-			position: relative;
-			top: -55px;
-		}
-		
-		#buttonwindow{
+		#selectCount{
 			position: absolute;
 			z-index: 10;
-			top: 150px;
-			left: 35px;
-			
-			border: 5px solid rgb(255, 200, 0);
-			width: 650px;
-			height: 275px;
-			
+			top: 475px;
+			left: 600px;
 			padding: 5px;
-			text-align: left;
 			
-			background-color: rgb(230, 255, 0);
-		}
-		
-		#sendwindow{
-			position: absolute;
-			z-index: 10;
-			top: 450px;
-			left: 40px;
-			width: 645px;
-			height: 275px;
-			padding: 5px;
-		}
-		
-		#sendwindow > form > button{
-			width: 200px;
-			height: 50px;
-			margin-bottom: 15px;
-			font-size: 20px;
+			font-size: 50px;
 		}
 		
 		table.buttontables tr td > button{
@@ -94,7 +56,7 @@
 	<div id="pagetopwindow">
 		<h1>すいーつをえらぶ</h1>
 	</div>
-		
+	
 	<div id="buttonwindow">
 		<table class="buttontables">
 			<tr>
@@ -142,24 +104,21 @@
 				</td>
 			</tr>
 		</table>
-
-		
 	</div>
 	
 	<div id="sendwindow">
-		<form action="SendOK.html" method="POST">
-			<button id="send_a" name="dataID" value="OK">いこっか</button>
-		</form>
-		<button id="send" name="dataID" value="OK">これでいいや</button>
+		<button id="send">これでいいや</button>
 	</div>
+	
+	<div id="selectCount">0/20</div>
 </div>
 
 <script>	
-	// 送信ボタンを押したとき
-	// ガチャ回数 属性の取得
-	//var count = document.querySelector("#count").value;
-	// XMLHttpRequest(); サーバとクライアントとの通信をするために必要なもの
+	// 選択された食べ物
 	var foods = [];
+	// 選択した回数
+	var count = 0;
+	var countText = document.querySelector("#selectCount");
 	
 	// スイーツボタン配列
 	var btnSweets = document.querySelectorAll("#sweet");
@@ -186,6 +145,11 @@
 	
 	// スイーツの追加
 	function addFood(value){
+		if(count >= 20) {
+			alert("いらない");
+			return;
+		}
+	
 		// 設定をして送信する形にする
 		var request = new XMLHttpRequest();
 		// open(メソッドの指定, URLの指定, 同期通信をするか)
@@ -198,8 +162,11 @@
 				var response = request.responseText;
 				// 文字列をJSで使えるように変換
 				var json = JSON.parse(response);
-				//console.log(json[value]);
 				foods.push(json[value]);
+				// カウントの加算
+				count++;
+				// 押した回数の表示変更
+				countText.innerText = count + "/20";
 			}
 		};
 	
@@ -211,6 +178,12 @@
 	}
 	
 	function sendSweet(){
+		// 選択数が20に満たない場合
+		if(count < 20) {
+			alert("たりない");
+			return;
+		}
+	
 		// 設定をして送信する形にする
 		var request = new XMLHttpRequest();
 		// open(メソッドの指定, URLの指定, 同期通信をするか)
@@ -233,6 +206,9 @@
 		//request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		// ここでサーバとの通信を行っている
 		request.send();		//POSTの場合は引数に文字列を渡す	
+		
+		// 表示するHTMLの変更
+		window.location.href = 'SendOK.html';
 	}
 	
 	// 画像の差し替え
